@@ -1,0 +1,28 @@
+Logical Position Take Home Dev Exercise (No Kill Shelter)
+
+You are making an API for an animal shelter. The animal shelter has 8 large kennels, 10 medium, and 16 small ones. Write a program that will ensure that as animals come into the shelter they are placed in the correct kennels. 
+
+Criteria:
+
+Large animals (size > 50lbs) can only fit in large-sized kennels. 
+Medium-sized animals (50lbs=> size >20lbs) can only be placed into medium and large kennels
+Small animals (size <= 20) can be placed into any sized kennels. 
+
+Your API should include the following functionality:
+
+1) An API call that can place a new animal in the BEST location. 
+2) An API call that can remove a specific animal. 
+3) An API call that will return a list of which animals are in which kennels. 
+4) An API call to reorganize the existing animals into the most appropriate spots. 
+
+NOTE: this is a no-kill shelter so animals that are removed are adopted! 
+
+Sample of JSON for adding an animal to the shelter:
+{
+"type": "Dog",
+"name": "Spot",
+"size-in-lbs": 30
+}
+
+When you come to the next interview meeting, please be prepared to screenshare and demonstrate your API for us and walk us through the code so we can ask questions about it.
+ 
