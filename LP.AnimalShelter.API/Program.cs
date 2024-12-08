@@ -1,6 +1,7 @@
 
 using LP.AnimalShelter.API.Interface;
 using LP.AnimalShelter.API.Models;
+using LP.AnimalShelter.API.Services;
 
 namespace LP.AnimalShelter.API
 {
@@ -11,13 +12,14 @@ namespace LP.AnimalShelter.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddSingleton<IShelter, Shelter>(s =>
+            builder.Services.AddSingleton<Shelter, Shelter>(s =>
             {
                 var numberOfLargeKernels = builder.Configuration.GetValue<int>("LargeKernels");
                 var numberOfMediumKernels = builder.Configuration.GetValue<int>("MediumKernels");
                 var numberOfSmallKernels = builder.Configuration.GetValue<int>("SmallKernels");
                 return new Shelter(numberOfLargeKernels, numberOfMediumKernels, numberOfSmallKernels);
             });
+            builder.Services.AddScoped<IShelterService, ShelterService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
