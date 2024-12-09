@@ -1,6 +1,0 @@
-@LP.AnimalShelter.API_HostAddress = http://localhost:5028
-
-GET {{LP.AnimalShelter.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

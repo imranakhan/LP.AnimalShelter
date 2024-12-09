@@ -1,15 +1,14 @@
 ﻿using LP.AnimalShelter.API.Enums;
-using LP.AnimalShelter.API.Interface;
 
 namespace LP.AnimalShelter.API.Models
 {
-    public class Shelter : IShelter
+    public class Shelter
     {
-        public Shelter(int totalLargeKernels, int totalMediumKernels, int totalSmallKernels)
+        public Shelter(int totalLargeKennels, int totalMediumKennels, int totalSmallKennels)
         {
-            NumOfLargeKennels = totalLargeKernels;
-            NumOfMediumKennels = totalMediumKernels;
-            NumOfSmallKennels = totalSmallKernels;
+            NumOfLargeKennels = totalLargeKennels;
+            NumOfMediumKennels = totalMediumKennels;
+            NumOfSmallKennels = totalSmallKennels;
 
             Kennels = new List<Kennel>();
             AddKennels(KennelType.Large, NumOfLargeKennels);

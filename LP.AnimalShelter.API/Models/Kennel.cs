@@ -7,8 +7,9 @@ namespace LP.AnimalShelter.API.Models
     {
         public KennelType Type { get; set; }
 
-        public Animal Animal { get; set; }
+        public Animal? Animal { get; set; }
 
+        [JsonIgnore]
         public bool IsAvailable 
         {
             get
