@@ -1,5 +1,8 @@
 ﻿namespace LP.AnimalShelter.API.Enums
 {
+    /// <summary>
+    /// Size types of Kennels
+    /// </summary>
     public enum KennelType
     {
         Small = 0,

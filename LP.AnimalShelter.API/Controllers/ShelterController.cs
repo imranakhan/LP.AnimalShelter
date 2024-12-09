@@ -2,10 +2,12 @@ using LP.AnimalShelter.API.Enums;
 using LP.AnimalShelter.API.Models;
 using LP.AnimalShelter.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 
 namespace LP.AnimalShelter.API.Controllers
 {
+    /// <summary>
+    /// Shelter class to perform all the shelter GET, POST, PUT, DELETE operations
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class ShelterController : ControllerBase
@@ -19,6 +21,9 @@ namespace LP.AnimalShelter.API.Controllers
             _shelterService = shelterService;
         }
 
+        /// <summary>
+        /// Get All the Kennels that have Animals
+        /// </summary>
         [HttpGet("kennels")]
         public async Task<IEnumerable<Kennel>> GetAllKennelsWithAnimals()
         {
@@ -26,7 +31,7 @@ namespace LP.AnimalShelter.API.Controllers
         }
 
         /// <summary>
-        /// Retrieve all the Existing Animals in the shelter
+        /// Get all the Existing Animals in the shelter
         /// </summary>
         [HttpGet("animals")]
         public async Task<IEnumerable<Animal>> GetAllAnimals()
@@ -34,25 +39,48 @@ namespace LP.AnimalShelter.API.Controllers
             return _shelterService.GetAllAnimals();
         }
 
+        /// <summary>
+        /// Add an Animal to the Shelter based on best organization
+        /// </summary>
         [HttpPost("animals")]
         public async Task<ActionResult<Animal>> AddAnimal(Animal model)
         {
-            if (model == null)
+            if (model == null) { return BadRequest(); }
+
+            try
             {
-                return BadRequest();
+                var animal = _shelterService.AddAnimal(model);
+                return Ok(animal);
             }
-
-            var animal = _shelterService.AddAnimal(model);
-
-            return Ok(animal);
+            catch (Exception ex)
+            {
+                _logger.Log(LogLevel.Error, ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
+        /// <summary>
+        /// Delete an animal from the shelter as he/she has been adopted
+        /// </summary>
         [HttpDelete("animals/{id}")]
         public async Task<IActionResult> DeleteAnimal(int id)
         {
-            return Ok(_shelterService.RemoveAnimal(id));
+            try
+            {
+                return Ok(_shelterService.RemoveAnimal(id));
+            }
+            catch (Exception ex)
+            {
+                _logger.Log(LogLevel.Error, ex.Message);
+                return BadRequest(ex.Message);
+            }
         }
 
+        /// <summary>
+        /// Reorganize all the animals in the kennels in the existing shelter. 
+        /// This optimizes the space and frees up the bigger kennels where possible
+        /// </summary>
+        /// <returns></returns>
         [HttpPut("animals/reorganize")]
         public async Task<IActionResult> Reorganize()
         {
@@ -64,9 +92,6 @@ namespace LP.AnimalShelter.API.Controllers
         /// <summary>
         /// Add an animal to a specific size kennel
         /// </summary>
-        /// <param name="kennelType"></param>
-        /// <param name="animal"></param>
-        /// <returns></returns>
         [HttpPost("animals/customadd")]
         public async Task<IActionResult> AddAnimalToSpecificKennel(KennelType kennelType, [FromBody] Animal animal)
         {
@@ -75,6 +100,9 @@ namespace LP.AnimalShelter.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Generate sample data with Animals for API testing
+        /// </summary>
         [HttpPost("generatesampledata")]
         public async Task<IActionResult> SetupSampleData()
         {

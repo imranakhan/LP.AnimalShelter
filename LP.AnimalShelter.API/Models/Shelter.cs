@@ -2,6 +2,10 @@
 
 namespace LP.AnimalShelter.API.Models
 {
+    /// <summary>
+    /// Overall Data structure that holds all the data for the Shelter. 
+    /// This contains all the Kennels based on Appsettings
+    /// </summary>
     public class Shelter
     {
         public Shelter(int totalLargeKennels, int totalMediumKennels, int totalSmallKennels)

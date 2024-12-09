@@ -1,9 +1,11 @@
-﻿using LP.AnimalShelter.API.Controllers;
-using LP.AnimalShelter.API.Enums;
+﻿using LP.AnimalShelter.API.Enums;
 using LP.AnimalShelter.API.Models;
 
 namespace LP.AnimalShelter.API.Services
 {
+    /// <summary>
+    /// ShelterService contains the implementation for all the shelter specific operations needed
+    /// </summary>
     public class ShelterService : IShelterService
     {
         // Using a singleton instance of a shelter object to persist data temporarily
@@ -16,6 +18,9 @@ namespace LP.AnimalShelter.API.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Add an animal to the Shelter to the best possible size kennel available
+        /// </summary>
         public Animal AddAnimal(Animal animal)
         {
             if (_shelter.ExistingAnimalIds.Contains(animal.Id))
@@ -79,16 +84,25 @@ namespace LP.AnimalShelter.API.Services
             return animal;
         }
 
+        /// <summary>
+        /// Get All Animals in the Shelter
+        /// </summary>
         public List<Animal> GetAllAnimals()
         {
             return _shelter.Kennels.Where(x => !x.IsAvailable).Select(x => x.Animal).ToList();
         }
-
+        
+        /// <summary>
+        /// Get all the Kennels that contain animals in the shelter
+        /// </summary>
         public List<Kennel> GetAllKennelsWithAnimals()
         {
             return _shelter.Kennels.Where(x => !x.IsAvailable).ToList();
         }
 
+        /// <summary>
+        /// Get a specific Animal from the Shelter by Id
+        /// </summary>
         public Animal GetAnimal(int id)
         {
             var existingAnimalsKennel = _shelter.Kennels.FirstOrDefault(x => x.Animal != null && x.Animal.Id == id);
@@ -103,12 +117,15 @@ namespace LP.AnimalShelter.API.Services
             }
         }
 
+        /// <summary>
+        /// Remove an animal from the shelter as it has been adopted
+        /// </summary>
         public Animal RemoveAnimal(int id)
         {
             var existingAnimalsKennel = _shelter.Kennels.FirstOrDefault(x => x.Animal != null && x.Animal.Id == id);
             if (existingAnimalsKennel != null)
             {
-                var existingAnimal  = existingAnimalsKennel.Animal;
+                var existingAnimal = existingAnimalsKennel.Animal;
                 existingAnimalsKennel.Animal = null;
                 return existingAnimal;
             }
@@ -118,6 +135,9 @@ namespace LP.AnimalShelter.API.Services
             }           
         }
 
+        /// <summary>
+        /// Add An Animal to the Specific Kennel Type in the current Shelter
+        /// </summary>
         public Animal AddAnimalToKennel(KennelType type, Animal animal)
         {
             var findAvailableKennel = _shelter.Kennels.FirstOrDefault(x => x.IsAvailable && x.Type == type);
@@ -135,12 +155,9 @@ namespace LP.AnimalShelter.API.Services
             return animal;
         }
 
-        private int GenerateRandomId()
-        {
-            Random rnd = new Random();
-            return rnd.Next(1, 9999999);
-        }
-
+        /// <summary>
+        /// Reorganize all the animals into the most efficient kennels in the shelter
+        /// </summary>
         public void ReorganizeAnimals()
         {
             // Skip the animals in the small Kennels as they are already in the most efficient spot
@@ -203,6 +220,16 @@ namespace LP.AnimalShelter.API.Services
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Generate a random Id to mimic database Ids set on insert
+        /// </summary>
+        /// <returns></returns>
+        private int GenerateRandomId()
+        {
+            Random rnd = new Random();
+            return rnd.Next(1, 9999999);
         }
     }
 }

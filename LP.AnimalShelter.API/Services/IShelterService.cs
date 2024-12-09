@@ -3,6 +3,9 @@ using LP.AnimalShelter.API.Models;
 
 namespace LP.AnimalShelter.API.Services
 {
+    /// <summary>
+    /// Interface for the ShelterService that contains all the various shelter operations
+    /// </summary>
     public interface IShelterService
     {
         public Animal AddAnimal(Animal animal);

@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace LP.AnimalShelter.API.Models
 {
+    /// <summary>
+    /// Kennel class that has a specific kennel size type and can hold an animal
+    /// </summary>
     public class Kennel
     {
         public KennelType Type { get; set; }

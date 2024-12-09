@@ -2,6 +2,9 @@
 
 namespace LP.AnimalShelter.API.Models
 {
+    /// <summary>
+    /// Animal class used for request object and for storage
+    /// </summary>
     public class Animal
     {
         public int Id { get; set; }
